@@ -1,0 +1,231 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPbTfXMvUKKt1XcVzEU895p",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Chi68P1/Code/blob/main/BT2%20AI%20(%C4%91%C3%A3%20s%E1%BB%ADa)\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "iJDKzhLQVsE1"
+      },
+      "outputs": [],
+      "source": [
+        "value1 = input('Nhập giá trị thứ 1:')\n",
+        "value2 = input('Nhập giá trị thứ 2:')\n",
+        "value1 = int(value1)\n",
+        "value2 = int(value2)\n",
+        "value1 + value2\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "with open('text.txt', mode = 'w') as account:\n",
+        "  account.write('201461 Nguyen Van A\\n')\n",
+        "  account.write('201462 Nguyen Van B\\n')\n",
+        "  account.write('201463 Nguyen Van C\\n')\n"
+      ],
+      "metadata": {
+        "id": "_GSXX0d6W6Lk"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "with open('text1.txt', mode = 'w') as account:\n",
+        "  print('201461 Nguyen Van A', file = account)\n",
+        "  print('201462 Nguyen Van B', file = account)\n",
+        "  print('201463 Nguyen Van C', file = account)"
+      ],
+      "metadata": {
+        "id": "bds-io7WYT4A"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "with open('text.txt', mode = 'r') as account:\n",
+        "  print(f\"{'MSSV':<10}{'Name':<20}{'Score':>2}\")\n",
+        "  for record in account:\n",
+        "    MSSV, Name, Score = record.split()\n",
+        "    print(f\"{MSSV:<10}{Name:<20}{Score:>2}\")\n"
+      ],
+      "metadata": {
+        "id": "uDaE5gxwZqTX"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "url = 'data2.csv'\n",
+        "dataframe = pd.read_csv(url)\n",
+        "# hiển thị 21 dòng \n",
+        "dataframe.head(21)\n",
+        "\n",
+        "# hiển thị 10 dòng \n",
+        "dataframe.iloc[0:10]\n",
+        "\n",
+        "#lọc A trong cột Ho va ten\n",
+        "dataframe = dataframe.set_index(dataframe['Ho va ten'])\n",
+        "dataframe.loc['A']\n",
+        "\n",
+        "dataframe[dataframe['Khoa']=='CNTT'].head(20) # lọc khoa\n",
+        "dataframe[(dataframe['Khoa']=='CNTT') & (dataframe['Diem']>=5)] # lọc khoa và điểm\n",
+        "dataframe['Khoa'].replace('CKM','Cơ khí máy').head(20) # thay tên CKM thành Cơ khí máy\n",
+        "\n",
+        "print('Diem cao nhat',dataframe['Diem'].max()) # avr() min() count() giá trị điểm cao nhất\n",
+        "\n",
+        "dataframe['Khoa'].unique() # liệt kê các giá trị trong Khoa\n",
+        "\n",
+        "dataframe['Khoa'].value_counts()\n",
+        "\n",
+        "dataframe.drop('MSSV', axis = 1).head(10) # xóa cột MSSV\n",
+        "\n",
+        "dataframe.drop(['MSSV','Khoa'], axis = 1).head(10) # xóa cột MSSV, Khoa\n",
+        "\n",
+        "dataframe.drop(dataframe.columns[2:5], axis = 1).head(10) # xóa cột 3 4 5\n",
+        "\n",
+        "dataframe[dataframe['Khoa']!='CKM'].head(10) # xóa hàng có CKM\n",
+        "\n",
+        "dataframe[dataframe.index!=4].head(10)\n",
+        "\n",
+        "dataframe.drop_duplicates().head(10)\n",
+        "\n",
+        "dataframe.groupby('Khoa').count()\n",
+        "\n",
+        "dataframe.groupby(['Khoa','Diem']).count()\n",
+        "\n",
+        "dataframe.groupby('Khoa')['Diem'].count()\n"
+      ],
+      "metadata": {
+        "id": "2lMCv9lxemgR"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "import pandas as pd\n",
+        "import numpy as np\n",
+        "time_index = pd.date_range('01/01/2023',periods = 100000,freq = '30s')\n",
+        "dataframe = pd.DataFrame(index = time_index)\n",
+        "dataframe['Acess.Amount'] = np.random.randint(1,10,100000)\n",
+        "dataframe.resample('2W').sum() # W lấy theo tuần, M lấy theo tháng"
+      ],
+      "metadata": {
+        "id": "eF4GCaTWsxmn"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "import pandas as pd\n",
+        "url = 'http://winterolympicsmedals.com/medals.csv'\n",
+        "data = pd.read_csv(url)\n",
+        "\n",
+        "# tìm tổng số huy chương vàng, bạc, đồng của USA\n",
+        "data = data.set_index(data['NOC'])\n",
+        "data1 = data.loc['USA']\n",
+        "data1['Medal'].value_counts()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "3Wsf46e8FrgU",
+        "outputId": "55c79b72-8c0a-42d2-aa1a-e8a17e39460a"
+      },
+      "execution_count": 176,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "Silver    80\n",
+              "Gold      78\n",
+              "Bronze    58\n",
+              "Name: Medal, dtype: int64"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 176
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "\n",
+        "import pandas as pd\n",
+        "url = 'http://winterolympicsmedals.com/medals.csv'\n",
+        "data = pd.read_csv(url)\n",
+        "\n",
+        "# Tìm số huy chương vàng ở pần thi cá nhân của USA\n",
+        "\n",
+        "gold = data[(data['Medal']=='Gold') & (data['NOC']=='USA')]\n",
+        "\n",
+        "gold['Sport'].value_counts()\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "Ty9qX6v2F9GM",
+        "outputId": "ab4903f3-a908-4ac3-b538-4d68f0dcc182"
+      },
+      "execution_count": 175,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "Skating       45\n",
+              "Skiing        21\n",
+              "Bobsleigh      9\n",
+              "Ice Hockey     3\n",
+              "Name: Sport, dtype: int64"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 175
+        }
+      ]
+    }
+  ]
+}
